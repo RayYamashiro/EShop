@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hi</title>
+</head>
+<body>
+<p th:text="${'Your balance:  ' + person.getBalance()}">Value</p>
+<br/>
+<a th:href="@{/organisation/neworg}">Create organisation</a>
+<br/>
+<a href="/logout">Logout</a>
+</body>
+</html>
