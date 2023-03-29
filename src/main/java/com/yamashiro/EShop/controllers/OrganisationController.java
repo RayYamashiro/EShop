@@ -2,9 +2,12 @@ package com.yamashiro.EShop.controllers;
 
 import com.yamashiro.EShop.models.Organisation;
 
+import com.yamashiro.EShop.security.PersonDetails;
 import com.yamashiro.EShop.services.RegistrationForOrganisation;
 import com.yamashiro.EShop.util.OrganisationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,10 +40,9 @@ public class OrganisationController {
 
         if (bindingResult.hasErrors())
             return "/organisation/neworg";
-
-
-
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        organisation.setOwner(personDetails.getPerson());
         registration.register(organisation);
         return "redirect:/hello";
     }

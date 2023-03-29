@@ -24,9 +24,7 @@ public class RegistrationForOrganisation {
     @Transactional
     public void register(Organisation organisation)
     {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
-        organisation.setId(personDetails.getPerson().getId());
+
         organisationRepository.save(organisation);
     }
 }
