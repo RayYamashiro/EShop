@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface OrganisationRepository extends JpaRepository<Organisation, Integer> {
     Optional<Organisation> findByName(String name);
+    Optional<Organisation> findByOwner(Person owner);
 }

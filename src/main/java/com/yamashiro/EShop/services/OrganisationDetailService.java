@@ -1,6 +1,7 @@
 package com.yamashiro.EShop.services;
 
 import com.yamashiro.EShop.models.Organisation;
+import com.yamashiro.EShop.models.Person;
 import com.yamashiro.EShop.repositories.OrganisationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,12 @@ public class OrganisationDetailService {
     {
         Optional<Organisation> organisation = organisationRepository.findByName(name);
         return organisation;
+    }
+
+    public Optional<Organisation> findByUserId(Person owner)
+    {
+        Optional<Organisation> optional = organisationRepository.findByOwner(owner);
+        return optional;
     }
 
 }

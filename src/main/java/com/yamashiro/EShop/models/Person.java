@@ -30,6 +30,10 @@ public class Person {
     @Column(name = "password")
     private String password;
 
+
+    @Column(name = "role")
+    private String role;
+
     @Column(name = "balance")
     private int balance;
 
@@ -95,6 +99,14 @@ public class Person {
 
     public void setOrganisations(List<Organisation> organisations) {
         this.organisations = organisations;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

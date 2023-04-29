@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your organisations</title>
+</head>
+<body>
+<tr th:each="Org : ${list}">
+
+    <div th:if="${#lists.isEmpty(list)}">
+        <p>No active organisations</p>
+    </div>
+
+
+
+        <div th:unless="${list}">
+            <td :th.text="${Org.name}">Value</td>
+        </div>
+
+</tr>
+</body>
+</html>

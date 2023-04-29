@@ -2,7 +2,10 @@ package com.yamashiro.EShop.controllers;
 
 import com.yamashiro.EShop.models.Organisation;
 
+import com.yamashiro.EShop.models.OrganisationStatus;
+import com.yamashiro.EShop.repositories.OrganisationRepository;
 import com.yamashiro.EShop.security.PersonDetails;
+import com.yamashiro.EShop.services.OrganisationDetailService;
 import com.yamashiro.EShop.services.RegistrationForOrganisation;
 import com.yamashiro.EShop.util.OrganisationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +19,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/organisation")
 public class OrganisationController {
     private final OrganisationValidator organisationValidator;
     private final RegistrationForOrganisation registration;
-@Autowired
-    public OrganisationController(OrganisationValidator organisationValidator, RegistrationForOrganisation registration) {
+    private final OrganisationDetailService organisationDetailService;
+    @Autowired
+    public OrganisationController(OrganisationValidator organisationValidator, RegistrationForOrganisation registration, OrganisationDetailService organisationDetailService) {
         this.organisationValidator = organisationValidator;
-    this.registration = registration;
+        this.registration = registration;
+        this.organisationDetailService = organisationDetailService;
 }
 
     @GetMapping("/neworg")
@@ -47,4 +56,18 @@ public class OrganisationController {
         return "redirect:/hello";
     }
 
+    @GetMapping("/show")
+    public String showActiveOrganisation(@ModelAttribute("organisation") Optional<Organisation> organisation , @ModelAttribute("list") ArrayList<Organisation> arrayList) //TODO
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        Optional<Organisation> optional = organisationDetailService.findByUserId(personDetails.getPerson());
+        if(organisation.isPresent())
+        {
+            arrayList = new ArrayList<>(optional.stream().filter((organisation1 -> organisation1.getStatus().equals(OrganisationStatus.ACTIVE))).toList());
+        }
+        //else
+        //    arrayList = new ArrayList<>();
+        return "organisation/show";
+    }
 }

@@ -28,11 +28,16 @@ public class Organisation {
     @NotEmpty(message = "name should not be empty")
     @Column(name="name")
     private String name;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
+    private OrganisationStatus organisationStatus;
     public Organisation(Person owner, String description , String name) {
         this.owner = owner;
         this.description = description;
         this.name=name;
+        this.organisationStatus = OrganisationStatus.ON_VERIFICATION;
     }
+
 
     public Organisation(){}
     public int getId() {
@@ -77,4 +82,13 @@ public class Organisation {
     public void setName(String name) {
         this.name = name;
     }
+
+    public OrganisationStatus getStatus() {
+        return organisationStatus;
+    }
+
+    public void setStatus(OrganisationStatus organisationStatus) {
+        this.organisationStatus = organisationStatus;
+    }
 }
+

@@ -20,6 +20,8 @@
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
     <br/>
     <input type="submit" value="Sigh up"/>
+
+    <a th:href="@{/auth/login}">Back to login</a>
 </form>
 
 </body>
